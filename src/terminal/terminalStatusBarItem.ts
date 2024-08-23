@@ -4,28 +4,38 @@ import { ExTerminal } from '../model/exTerminal';
 
 export class TerminalStatusBarItem {
   private _statusBarItem: vscode.StatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -1);
-
   private _terminal!: ExTerminal;
-
   private _registerCommand: vscode.Disposable;
+  private countClicks: number = 0;
+  private timeoutDisposal: NodeJS.Timeout = null; // eslint-disable-line @typescript-eslint/no-unused-vars
+  private isStillValid = true;
 
-  constructor(terminal: ExTerminal, reg: vscode.Disposable, hasIdAsName: boolean) {
-    hasIdAsName = true;
+  constructor(terminal: ExTerminal) {
     this._terminal = terminal;
-    this.createStatusBarItem(hasIdAsName);
+    this.createStatusBarItem(true);
     this.addWatchIconWhenTerminalIsBusy(terminal);
-    this._registerCommand = reg;
+    this._registerCommand = vscode.commands.registerCommand(commandsNames.showTerminal + terminal._id, () =>
+      this.clickListeningCommand()
+    );
   }
 
   public show(): void {
     this._terminal.show();
   }
 
+  public highlight(): void {
+    // this._terminal.show(); // don't think we need to do this, maybe set color?
+  }
+
+  public isValid(): boolean {
+    return this.isStillValid;
+  }
+
   private createStatusBarItem(hasIdAsName: boolean) {
     if (hasIdAsName) {
-      this.setupStatusBarItem(this._terminal.__id__, this._terminal.__id__);
+      this.setupStatusBarItem(this._terminal._id, this._terminal._id);
     } else {
-      this.setupStatusBarItem(this._terminal.name, this._terminal.__id__);
+      this.setupStatusBarItem(this._terminal.name, this._terminal._id);
     }
   }
 
@@ -61,9 +71,25 @@ export class TerminalStatusBarItem {
     });
   }
 
+  private clickListeningCommand() {
+    this.countClicks += 1;
+    if (this.countClicks === 1) {
+      this.show();
+      this.timeoutDisposal = setTimeout(() => {
+        this.countClicks = 0;
+        this.timeoutDisposal = null;
+      }, 650);
+    }
+    if (this.countClicks === 3) {
+      this.timeoutDisposal = null;
+      // three click
+      this.dispose();
+    }
+  }
+
   public changeName(hasIdAsName: boolean) {
     if (hasIdAsName) {
-      this._statusBarItem.text = `$(terminal) ${this._terminal.__id__}`;
+      this._statusBarItem.text = `$(terminal) ${this._terminal._id}`;
     } else {
       this._statusBarItem.text = `$(terminal) ${this._terminal.name}`;
     }
@@ -73,5 +99,6 @@ export class TerminalStatusBarItem {
     this._statusBarItem.dispose();
     this._terminal.dispose();
     this._registerCommand.dispose();
+    this.isStillValid = false;
   }
 }

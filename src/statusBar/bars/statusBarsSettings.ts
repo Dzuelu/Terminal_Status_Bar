@@ -21,8 +21,8 @@ const statusBarsSettings: StatusBarsSettings[] = [
     priority: 0,
     text: '$(terminal) root',
     tooltip: [
-      'Create a new terimanl to the root.',
-      "Toggle visibility by pressing F1 and select 'Toggle visibility of root teriminal'"
+      'Create a new terminal to the root.',
+      "Toggle visibility by pressing F1 and select 'Toggle visibility of root terminal'"
     ].join('\n')
   },
   {
@@ -33,8 +33,8 @@ const statusBarsSettings: StatusBarsSettings[] = [
     priority: 0,
     text: '$(terminal) current',
     tooltip: [
-      'Create a new terimanl to the current folder.',
-      "Toggle visibility by pressing F1 and select 'Toggle visibility of current teriminal'"
+      'Create a new terminal to the current folder.',
+      "Toggle visibility by pressing F1 and select 'Toggle visibility of current terminal'"
     ].join('\n')
   },
   {

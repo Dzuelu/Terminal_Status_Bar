@@ -41,6 +41,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/order': 'off',
     'import/prefer-default-export': 'off',
+    'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
     'max-len': ['error', { code: 120 }],
     'no-console': 'off',
     'no-new': 'off',
