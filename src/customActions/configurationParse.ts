@@ -18,8 +18,8 @@ class ConfigurationParse {
   }
 
   public async parse(fullPath: string) {
-    const fileContent = await fs.readTextFile(fullPath);
     try {
+      const fileContent = await fs.readTextFile(fullPath);
       this.create(JSON.parse(fileContent));
     } catch {
       vscode.window.showInformationMessage('Terminal Status bar: Problem with parsing the json');

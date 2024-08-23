@@ -24,6 +24,7 @@
 		"Other"
 	],
 	"main": "./out/extension.js",
+	"type": "commonjs",
 	"contributes": {
 		"commands": [
 			{
@@ -73,6 +74,7 @@
 	],
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
+		"start": "npm run compile && code -n --disable-extensions --extensionDevelopmentPath=$PWD",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"lint": "eslint . --ext .ts",

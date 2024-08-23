@@ -6,4 +6,4 @@ export interface CustomActionInfo {
   when?: string;
 }
 
-export const filename = '//sideBarActions.json';
+export const filename = 'sideBarActions.json';

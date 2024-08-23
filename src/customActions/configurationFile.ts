@@ -15,7 +15,7 @@ export class ConfigurationFile {
 
   constructor(private context: vscode.ExtensionContext) {
     this.globalStoragePath = context.globalStoragePath;
-    this.fullPath = this.globalStoragePath + this.configurationFileName;
+    this.fullPath = path.join(this.globalStoragePath, this.configurationFileName);
   }
 
   public async checkIfFileExistAndCrete() {
