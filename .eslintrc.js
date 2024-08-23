@@ -1,7 +1,6 @@
 module.exports = {
   env: {
     es6: true,
-    jest: true,
     node: true
   },
   extends: [
@@ -16,26 +15,27 @@ module.exports = {
     'plugin:import/warnings',
     'plugin:import/typescript'
   ],
-  ignorePatterns: ['node_modules', '.eslintrc.js'],
-  overrides: [
-    {
-      files: ['spec/**/*.ts'],
-      rules: {
-        '@typescript-eslint/ban-ts-ignore': 'off',
-        '@typescript-eslint/no-explicit-any': 'off',
-        '@typescript-eslint/no-non-null-assertion': 'off'
-      }
-    }
-  ],
+  ignorePatterns: ['node_modules', 'out'],
+  // overrides: [
+  //   {
+  //     files: ['spec/**/*.ts'],
+  //     rules: {
+  //       '@typescript-eslint/ban-ts-ignore': 'off',
+  //       '@typescript-eslint/no-explicit-any': 'off',
+  //       '@typescript-eslint/no-non-null-assertion': 'off'
+  //     }
+  //   }
+  // ],
   parser: '@typescript-eslint/parser',
   plugins: ['sort-keys-fix'],
   rules: {
-    '@typescript-eslint/naming-convention': [
-      'error',
-      { format: null, modifiers: ['requiresQuotes'], selector: 'default' },
-      { format: ['camelCase', 'PascalCase'], selector: 'default' }
-    ],
+    // '@typescript-eslint/naming-convention': [
+    //   'error',
+    //   { format: null, modifiers: ['requiresQuotes'], selector: 'default' },
+    //   { format: ['camelCase', 'PascalCase'], selector: 'default' }
+    // ],
     camelcase: 'off',
+    'class-methods-use-this': 'off',
     'import/extensions': ['error', 'never', { ignorePackages: true }],
     'import/first': 'off',
     'import/no-unresolved': 'off',
@@ -43,10 +43,18 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'max-len': ['error', { code: 120 }],
     'no-console': 'off',
+    'no-new': 'off',
+    'no-param-reassign': 'off',
     'no-throw-literal': 'error',
-    'no-underscore-dangle': 'error',
+    'no-underscore-dangle': 'off',
     'node/no-extraneous-import': 'error',
-    'node/no-missing-import': ['error', { tryExtensions: ['.ts', '.d.ts', '.js'] }],
+    'node/no-missing-import': [
+      'error',
+      {
+        allowModules: ['vscode'],
+        tryExtensions: ['.ts', '.d.ts', '.js']
+      }
+    ],
     'node/no-unpublished-import': 'off',
     'node/no-unsupported-features/es-syntax': 'off',
     'prettier/prettier': [

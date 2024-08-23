@@ -1,17 +1,17 @@
-import * as fs from "async-file";
-import { customActions } from "./customActions";
-import { CustomActionInfo } from "../model/configurationInfo";
-import { getRealPath } from "../utils/path.utils";
-import * as vscode from "vscode";
+import * as fs from 'async-file';
+import { customActions } from './customActions';
+import { CustomActionInfo } from '../model/configurationInfo';
+import { getRealPath } from '../utils/path.utils';
+import * as vscode from 'vscode';
 
 class ConfigurationParse {
   private async isWhenExist(path: string, whenPath: string): Promise<boolean> {
     try {
-      if (whenPath && (await fs.exists(path + "\\" + whenPath))) {
+      if (whenPath && (await fs.exists(`${path}\\${whenPath}`))) {
         return true;
       }
     } catch (e) {
-      console.log("TerminalStatusBar");
+      console.log('TerminalStatusBar');
       console.log(e);
     }
     return false;
@@ -22,9 +22,7 @@ class ConfigurationParse {
     try {
       this.create(JSON.parse(fileContent));
     } catch {
-      vscode.window.showInformationMessage(
-        "Terminal Status bar: Problem with parsing the json"
-      );
+      vscode.window.showInformationMessage('Terminal Status bar: Problem with parsing the json');
     }
   }
 
@@ -34,13 +32,7 @@ class ConfigurationParse {
       if (actionsInfo.hide) {
         return;
       }
-      if (
-        actionsInfo.when &&
-        !(await this.isWhenExist(
-          getRealPath(actionsInfo.path),
-          actionsInfo.when
-        ))
-      ) {
+      if (actionsInfo.when && !(await this.isWhenExist(getRealPath(actionsInfo.path), actionsInfo.when))) {
         return;
       }
 
