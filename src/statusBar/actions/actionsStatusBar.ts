@@ -3,7 +3,6 @@ import * as vscode from 'vscode';
 import { getRealPath } from '../../utils/path.utils';
 import * as modulePath from 'path';
 
-console.log('here');
 vscode.commands.registerCommand(commandsNames.openInTerminal, () => {
   try {
     const path = getRealPath('current');
