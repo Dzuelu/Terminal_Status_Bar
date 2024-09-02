@@ -19,11 +19,26 @@ class ConfigurationParse {
   }
 
   public async parse(fullPath: string) {
+    let fileContent: string | null = null;
     try {
-      const fileContent = await fs.readTextFile(fullPath);
-      this.create(JSON.parse(fileContent));
+      fileContent = await fs.readTextFile(fullPath);
+    } catch {
+      vscode.window.showInformationMessage(`Terminal Status bar: Unable to read file from path\n\n${fullPath}`);
+      return;
+    }
+
+    let parsedContents: CustomActionInfo[] = null;
+    try {
+      parsedContents = JSON.parse(fileContent);
     } catch {
       vscode.window.showInformationMessage('Terminal Status bar: Problem with parsing the json');
+      return;
+    }
+
+    try {
+      this.create(parsedContents);
+    } catch {
+      vscode.window.showInformationMessage('Terminal Status bar: Problem using the CustomActionInfo json');
     }
   }
 
