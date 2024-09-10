@@ -1,20 +1,14 @@
 import * as vscode from 'vscode';
-import { terminals } from './terminal';
+import { TerminalHandler } from './terminalHandler';
 
 export default function activate(context: vscode.ExtensionContext) {
+  const subscriptions = [
+    vscode.window.onDidOpenTerminal(terminal => TerminalHandler.addTerminal(terminal)),
+    vscode.window.onDidCloseTerminal(terminal => TerminalHandler.closeTerminal(terminal)),
+    vscode.window.onDidChangeActiveTerminal(terminal => TerminalHandler.selectedTerminal(terminal))
+    // vscode.commands.registerCommand(commandsNames.HasIdAsNameTerminal, () => this.HasIdAsNameCommand(context))
+  ];
+  context.subscriptions.push(...subscriptions);
 
-  context.subscriptions.push(vscode.window.onDidOpenTerminal((terminal: vscode.Terminal) => {
-    terminals.concatTerminals(context);
-  }));
-
-  context.subscriptions.push(vscode.window.onDidCloseTerminal((terminal: any) => {
-    terminals.onDidCloseTerminal(terminal);
-  }));
-
-  context.subscriptions.push(vscode.window.onDidChangeActiveTerminal((terminal: vscode.Terminal) => {
-    terminals.concatTerminals(context);
-  }));
-
-  terminals.concatTerminals(context);
-  terminals.registryCommandForNameOrId(context);
+  vscode.window.terminals.forEach(terminal => TerminalHandler.addTerminal(terminal));
 }

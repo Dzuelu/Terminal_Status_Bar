@@ -1,7 +1,8 @@
-import * as vscode from "vscode";
+import * as vscode from 'vscode';
 
 export class StatusBar {
   public StatusBar: vscode.StatusBarItem;
+
   private visibility: boolean;
 
   constructor(
@@ -34,4 +35,3 @@ export class StatusBar {
     this.context.globalState.update(name, value);
   }
 }
-
